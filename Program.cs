@@ -9,7 +9,8 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddDbContext<BookstoreContext>(options =>
     options.UseSqlite(builder.Configuration.GetConnectionString("DefaultConnection")));
 
-builder.Services.AddScoped<IBookstoreRepository, EfBookstorerepository>();
+builder.Services.AddScoped<IBookstoreRepository, EfBookstoreRepository>();
+
 
 var app = builder.Build();
 

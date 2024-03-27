@@ -26,9 +26,36 @@ namespace Mission10_Sheffield.Infrastructure
         
         public PaginationInfo PageModel { get; set; }
         
+        public bool PageClassesEnabled { get; set; } = false;
+        
+        public string PageClass { get; set; } = String.Empty;
+        
+        public string PageClassNormal { get; set; } = String.Empty;
+        
+        public string PageClassSelected { get; set; } = String.Empty;
+        
         public override void Process(TagHelperContext context, TagHelperOutput output)
         {
-            IUrlHelper? urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext!);
+            if (ViewContext != null && PageModel != null)
+            {
+                IUrlHelper urlHelper = _urlHelperFactory.GetUrlHelper(ViewContext);
+                
+                output.TagName = "div";
+                TagBuilder tag = new TagBuilder("div");
+                for (int i = 1; i <= PageModel.TotalPages; i++)
+                {
+                    TagBuilder currentItem = new TagBuilder("a");
+                    currentItem.Attributes["href"] = urlHelper.Action(PageAction, new { pageNum = i });
+                    if (PageClassesEnabled)
+                    {
+                        currentItem.AddCssClass(PageClass);
+                        currentItem.AddCssClass(i == PageModel.CurrentPage ? PageClassSelected : PageClassNormal);
+                    }
+                    currentItem.InnerHtml.Append(i.ToString());
+                    tag.InnerHtml.AppendHtml(currentItem);
+                }
+                output.Content.AppendHtml(tag);
+            }
            
         }
     }
