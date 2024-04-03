@@ -25,7 +25,8 @@ namespace Mission10_Sheffield.Infrastructure
         public string? PageAction { get; set; }
         
         public PaginationInfo PageModel { get; set; }
-        
+        [HtmlAttributeName(DictionaryAttributePrefix = "page-url-")]
+        public Dictionary<string, object> PageUrlValues { get; set; } = new Dictionary<string, object>();
         public bool PageClassesEnabled { get; set; } = false;
         
         public string PageClass { get; set; } = String.Empty;
@@ -45,7 +46,8 @@ namespace Mission10_Sheffield.Infrastructure
                 for (int i = 1; i <= PageModel.TotalPages; i++)
                 {
                     TagBuilder currentItem = new TagBuilder("a");
-                    currentItem.Attributes["href"] = urlHelper.Action(PageAction, new { pageNum = i });
+                    PageUrlValues["pageNum"] = i;
+                    currentItem.Attributes["href"] = urlHelper.Action(PageAction, PageUrlValues);
                     if (PageClassesEnabled)
                     {
                         currentItem.AddCssClass(PageClass);

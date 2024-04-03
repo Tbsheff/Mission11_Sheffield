@@ -1,19 +1,24 @@
-﻿@page
-@model Mission10_Sheffield.Pages.CartLayout
-
-@{
-    Layout = null;
+﻿@{
 }
 
 <!DOCTYPE html>
 
 <html>
+
 <head>
-    <title></title>
+    <meta name="viewport" content="width=device-width"/>
+    <title>The Bookstore Project</title>
+    <link rel="stylesheet" href="~/lib/bootstrap/dist/css/bootstrap.min.css"/>
 </head>
+
 <body>
-<div>
-    
+<div class="bg-dark text-white p-2">
+    The Bookstore Project
+</div>
+<div class="container">
+    <main role="main" class="pb-3">
+        @RenderBody()
+    </main>
 </div>
 </body>
 </html>

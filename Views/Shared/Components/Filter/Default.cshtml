@@ -1,2 +1,10 @@
 ﻿@model System.Linq.IOrderedQueryable<string>
 
+
+<div class="d-grid gap-2">
+    <a class="btn btn-outline-secondary @(ViewContext.RouteData.Values["category"]?.ToString() == "All" ? "active" : "")" asp-controller="Home" asp-action="Index" asp-route-category="All">Home</a>
+    @foreach (string x in Model ?? Enumerable.Empty<string>())
+    {
+        <a class="btn btn-outline-secondary @(ViewContext.RouteData.Values["category"]?.ToString() == x ? "active" : "")" asp-controller="Home" asp-action="Index" asp-route-category="@x" asp-route-pageNum="1" >@x</a>
+    }
+</div>
